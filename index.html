@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta name="description" content="DockerHub代理加速,Github代理加速, ">
+    <meta name="keywords" content="Github代理加速, DockerHub代理加速, dockerhub镜像, JIASU.IN">
+    <title>JIASU.IN-公益加速服务</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Long+Cang&display=swap');
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.5;
+            color: #000;
+            margin: 0;
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            font-family: "Long Cang", cursive;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 2em; /* 调整字体大小 */
+            text-align: center;
+            margin-top: 2px; /* 调整距离顶部的距离 */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 添加阴影效果 */
+        }
+        .button-container {
+            display: flex; /* 使用 Flexbox */
+            justify-content: center; /* 居中对齐 */
+            flex-wrap: nowrap; /* 不换行 */
+            margin-top: 20px; /* 添加顶部间距 */
+        }
+        .domain {
+            display: inline-block;
+            margin: 0 10px; /* 调整按钮之间的间距 */
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #4e8cff, #007aff); /* 渐变背景 */
+            color: white;
+            border-radius: 8px; /* 圆角 */
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s; /* 平滑过渡 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 更明显的阴影 */
+        }
+        .domain:hover {
+            background: linear-gradient(90deg, #007aff, #005bb5); /* 悬停时的渐变背景 */
+            transform: translateY(-2px); /* 悬停时轻微抬起 */
+        }
+        .content {
+            margin-top: 30px;
+            display: none; /* 初始隐藏内容 */
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            position: relative;
+            width: 100%; /* 设置宽度为100% */
+            box-sizing: border-box; /* 包含内边距和边框 */
+            max-width: 100%; /* 确保不超过容器宽度 */
+            margin: 20px 0; /* 增加上下间距 */
+        }
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.875em;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #28a745; /* 绿色背景 */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.3s; /* 平滑过渡 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 更明显的阴影 */
+        }
+        .copy-button:hover {
+            background: #218838; /* 悬停时的深绿色 */
+        }
+        pre:hover .copy-button {
+            opacity: 1; /* 悬停时显示按钮 */
+        }
+        footer {
+            margin-top: 20px; /* 添加顶部间距 */
+            font-size: 0.9em; /* 调整字体大小 */
+            color: #555; /* 设置字体颜色 */
+        }
+    </style>
+</head>
+<body>
+
+<h1>JIASU.IN</h1>
+<div class="button-container">
+    <div class="domain" onclick="showContent('github')">Github Proxy</div>
+    <div class="domain" onclick="showContent('docker')">DockerHub Proxy</div>
+</div>
+
+<div id="content" class="content"></div>
+
+<script>
+    function showContent(service) {
+        const contentDiv = document.getElementById('content');
+        let content = '';
+
+        if (service === 'github') {
+            content = `
+<h3>示例：</h3>
+<pre><code>https://gh.jiasu.in/https://github.com/0-RTT/telegraph/blob/main/worker.js
+</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+<pre><code>https://gh.jiasu.in/raw.githubusercontent.com/0-RTT/telegraph/main/worker.js
+</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+
+
+<h3>git clone：</h3>
+<pre><code>git clone https://gh.jiasu.in/https://github.com/0-RTT/telegraph
+</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+<h3>wget & curl：</h3>
+<pre><code>
+wget https://gh.jiasu.in/https://github.com/0-RTT/telegraph/blob/main/worker.js
+
+curl -O https://gh.jiasu.in/https://raw.githubusercontent.com/0-RTT/telegraph/main/worker.js
+</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+            `;
+        } else if (service === 'docker') {
+            content = `
+                <h3>设置 registry mirror</h3>
+                <pre><code>sudo tee /etc/docker/daemon.json &lt;&lt;EOF
+{
+    "registry-mirrors": ["https://dh.jiasu.in"]
+}
+EOF</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+                <h3>重载 Docker 服务</h3>
+                <pre><code>sudo systemctl daemon-reload && sudo systemctl restart docker
+</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+                <h3>拉取镜像</h3>
+                <pre><code>docker pull library/alpine:latest
+</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+            `;
+        }
+
+        contentDiv.innerHTML = content;
+        contentDiv.style.display = 'block'; // 显示内容
+    }
+
+    function copyCode(button) {
+        const code = button.previousSibling;
+        const textArea = document.createElement('textarea');
+        textArea.value = code.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        button.textContent = '已复制';
+        setTimeout(() => {
+            button.textContent = '复制代码';
+        }, 2000);
+    }
+
+    // 默认展示 GitHub 的内容
+    showContent('github');
+</script>
+
+<footer>
+      项目开源于 GitHub - <a href="https://github.com/0-RTT/ghproxy-go" target="_blank" rel="noopener noreferrer">0-RTT/ghproxy-go</a>
+</footer>
+
+</body>
+</html>
