@@ -25,15 +25,21 @@ install_command() {
     fi
 }
 
+# 检查并安装必要的命令
+check_and_install_dependencies() {
+    check_command curl
+    check_command nodejs
+    check_command npm
+}
+
 # 安装函数
 install() {
+    # 检查并安装必要的命令
+    check_and_install_dependencies
+
     # 创建 nsfw 目录
     mkdir -p "$NSFW_DIR"
     cd "$NSFW_DIR" || exit
-
-    # 检查必要的命令
-    check_command curl
-    check_command wget
 
     # 下载 index.js 和 package.json
     INDEX_URL="https://raw.githubusercontent.com/0-RTT/nsfw/main/index.js"
@@ -45,7 +51,6 @@ install() {
     # 进入 nsfw 目录并执行 npm install
     if [ -f package.json ]; then
         echo "正在执行 npm install..."
-        check_command npm
         npm install
         if [ $? -eq 0 ]; then
             echo "npm install 执行成功！"
