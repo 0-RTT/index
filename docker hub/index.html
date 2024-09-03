@@ -12,7 +12,7 @@
             line-height: 1.6;
             color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -21,13 +21,14 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 5px 10px 10px 10px;
             background: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         h1 {
             font-size: 2em;
+            margin-top: 10px;
             margin-bottom: 0.5em;
             color: #007aff;
         }
@@ -77,12 +78,12 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <center>
-        <h1>Docker Hub Proxy</h1>
-    </center>
-<h3>第一步：设置registry mirror</h3>
-<pre><code>sudo tee /etc/docker/daemon.json &lt;&lt;EOF
+    <div class="container">
+        <center>
+            <h1>Docker Hub Proxy</h1>
+        </center>
+        <h3>第一步：设置registry mirror</h3>
+        <pre><code>sudo tee /etc/docker/daemon.json &lt;&lt;EOF
 {
     "registry-mirrors": [
         "https://940740.xyz"
@@ -90,26 +91,27 @@
 }
 EOF</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
 
-<h3>第二步：重新加载 systemd 管理</h3>
-<pre><code>sudo systemctl daemon-reload</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+        <h3>第二步：重新加载 systemd 管理</h3>
+        <pre><code>sudo systemctl daemon-reload</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
 
-<h3>第三步：重启 Docker 服务</h3>
-<pre><code>sudo systemctl restart docker</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+        <h3>第三步：重启 Docker 服务</h3>
+        <pre><code>sudo systemctl restart docker</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
 
-<h3>第四步：测试</h3>
-<pre><code>docker pull ubuntu</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
-  
-<script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" type="application/javascript"></script>
-<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/toastr.js/2.1.4/toastr.min.js"></script>
-<script>
-    function copyCode(button) {
-        const codeBlock = $(button).prev('code').text();
-        navigator.clipboard.writeText(codeBlock).then(() => {
-            toastr.success('复制成功！');
-        }).catch(err => {
-            toastr.error('复制失败！');
-        });
-    }
-</script>
+        <h3>第四步：测试</h3>
+        <pre><code>docker pull ubuntu</code><button class="copy-button" onclick="copyCode(this)">复制代码</button></pre>
+    </div>
+
+    <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" type="application/javascript"></script>
+    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/toastr.js/2.1.4/toastr.min.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = $(button).prev('code').text();
+            navigator.clipboard.writeText(codeBlock).then(() => {
+                toastr.success('复制成功！');
+            }).catch(err => {
+                toastr.error('复制失败！');
+            });
+        }
+    </script>
 </body>
 </html>
