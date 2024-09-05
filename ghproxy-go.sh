@@ -100,12 +100,13 @@ remove() {
     # 重新加载 systemd 配置
     sudo systemctl daemon-reload
 
-    # 删除解压后的文件
-    if [ -f "$GH_PROXY_DIR/ghproxy-go" ]; then
-        rm "$GH_PROXY_DIR/ghproxy-go"
-        echo "已删除解压后的文件: ghproxy-go"
+    # 删除安装目录及其内容
+    GH_PROXY_DIR="/root/ghproxy"
+    if [ -d "$GH_PROXY_DIR" ]; then
+        rm -r "$GH_PROXY_DIR"
+        echo "已删除安装目录: $GH_PROXY_DIR"
     else
-        echo "解压后的文件不存在: ghproxy-go"
+        echo "安装目录不存在: $GH_PROXY_DIR"
     fi
 
     # 输出卸载完成信息
