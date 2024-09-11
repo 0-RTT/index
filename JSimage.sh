@@ -93,7 +93,7 @@ EOL
     sudo systemctl enable JSimage.service
 
     # 输出安装完成信息
-    echo "JSimage 已安装，请阅读 README.md 配置 Nginx 反向代理。"
+    echo "JSimage 已安装到/usr/local/bin，请阅读 README.md 配置 Nginx 反向代理。"
 }
 
 # 卸载函数
