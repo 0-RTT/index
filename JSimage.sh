@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # 默认的安装目录
-JSIMAGE_DIR="/root/JSimage"
+JSIMAGE_DIR="/usr/local/bin/JSimage"
 
 # 检查命令是否存在的函数
 check_command() {
@@ -44,7 +44,8 @@ install() {
     check_and_install_dependencies
 
     # 创建 JSimage 目录
-    mkdir -p "$JSIMAGE_DIR"
+    sudo mkdir -p "$JSIMAGE_DIR"
+    sudo chown $USER:$USER "$JSIMAGE_DIR"  # 更改目录所有者为当前用户
     cd "$JSIMAGE_DIR" || exit
 
     # 使用 git 克隆项目
@@ -131,7 +132,7 @@ remove() {
         n|N )
             # 删除 JSimage 目录
             if [ -d "$JSIMAGE_DIR" ]; then
-                rm -rf "$JSIMAGE_DIR"
+                sudo rm -rf "$JSIMAGE_DIR"
                 echo "已删除 JSimage 目录: $JSIMAGE_DIR"
             else
                 echo "JSimage 目录不存在: $JSIMAGE_DIR"
